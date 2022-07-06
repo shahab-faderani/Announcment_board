@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+}
+
+.App{
+  width: "400px";
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* center items vertically, in this case */
+  align-items: center;
+}
+
+.active{
+  background-color:blue;
+  color: aliceblue;
+}
