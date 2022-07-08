@@ -1,12 +1,24 @@
-# faderani_coding_challenge
-
+# Announcment_board
+an annpunment board to publish, delete and sort announcments. 
 
 
 ## Getting started
+Requirements:
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+    -nodeJS v2 or greater
+    -npm v6 or greater 
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+Build instructions, assuming that nodeJS and npm are installed:
+
+    -Backend: open a terminal in the backend folder and run the following commands:
+              
+        npm i     
+        npm run devStart  
+
+    -Frontend: open a terminal in the frontend folder and run the following commands:
+
+        npm i
+        npm start
 
 ## Add your files
 
