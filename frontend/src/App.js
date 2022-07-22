@@ -5,6 +5,11 @@ import AnnouncementsInput from "./AnnouncementsInput";
 import AnnouncementsList from "./AnnouncementsList";
 import React, { Component } from 'react'; 
 
+// NODE_ENV = 'development' 
+// NODE_ENV = 'production' 
+
+const baseURL = process.env.NODE_ENV === 'production' ? "api/v1/announcements" : "http://localhost:3001/api/v1/announcements";
+
 function App() {
   const [announcements, setAnnouncements] = useState([]);
   const [announcementText, setAnnouncementText] = useState("");
@@ -15,7 +20,7 @@ function App() {
   // use Effect
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetch("http://localhost:3001/announcements");
+      const result = await fetch(baseURL);
       let announcements = await result.json();
       setAnnouncements(announcements);
     };
@@ -25,7 +30,7 @@ function App() {
 
   //handlers
   const handleDeleteAnnouncement = async (uuid) => {
-    const result = await fetch(`http://localhost:3001/announcements/${uuid}`, {
+    const result = await fetch(baseURL + "/" + uuid, {
       method: "DELETE",
     });
     let newAnnouncements = await result.json();
@@ -39,7 +44,7 @@ function App() {
       userName: userName === "" ? "anonymous" : userName
     };
 
-    const result = await fetch(`http://localhost:3001/announcements`, {
+    const result = await fetch(baseURL, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -47,7 +52,7 @@ function App() {
       },
     });
     let newAnnouncements = await result.json();
-    if (result.status == "200"){
+    if (result.status == "201"){
       setAnnouncements(newAnnouncements)
       setAnnouncementText("");
       setUserNametext("");
