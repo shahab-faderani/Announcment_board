@@ -3,7 +3,7 @@ import { format } from 'date-fns'
 
 const Announcement = ({
   handleDeleteAnnouncement,
-  announcement: { content, userName, date, uuid },
+  announcement: { content, username, date, uuid },
 }) => {
   return (
     <div
@@ -17,9 +17,9 @@ const Announcement = ({
     >
       <div className ="content" key={uuid}>{content}</div>
       <br />
-      <div className ="userName Date" style={{
+      <div className ="username Date" style={{
         direction: "rtl"
-      }}>{userName + " on " + format(Date.parse(date),"yyyy-MM-dd") + (userName == "anonymous" ? "" : "-") }</div>
+      }}>{username + " on " + format(Date.parse(date),"yyyy-MM-dd") + (username == "anonymous" ? "" : "-") }</div>
       <br />
       <button onClick={() => handleDeleteAnnouncement(uuid)}>Delete</button>
     </div>

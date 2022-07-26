@@ -1,3 +1,4 @@
+const {PrismaClient} = require("@prisma/client");
 const express = require("express");
 require("dotenv").config();
 const app = express();
@@ -5,25 +6,21 @@ const port = process.env.PORT || 3001;
 const bodyParser = require("body-parser");
 const uuid = require("uuid");
 const cors = require("cors");
-const db = require("./db");
 const api_route = "/api/v1";
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
+const prisma = new PrismaClient();
 
 //get all announcements
 app.get(api_route + "/announcements", async (req, res) => {
     try {
-        const announcementsFromDB = await db.query(
-           "SELECT * FROM announcements;" 
-        );
-
+        const announcements = await prisma.announcements.findMany();
         res.status(200).json({
             status: "success",
-            results: announcementsFromDB.rows.length,
+            length: announcements.length,
             data: {
-                announcements: announcementsFromDB.rows
+                announcements: announcements
             }
         });
     } catch(err) {
@@ -33,18 +30,23 @@ app.get(api_route + "/announcements", async (req, res) => {
 
 //make an announcement
 app.post(api_route + "/announcements", async (req, res) => {
-    console.log(req.body);
+    
 
     try {
-        const announcementsFromDB = await db.query(
-            "INSERT INTO announcements (content, date, userName, uuid) VALUES ($1, $2, $3) RETURNING *;",
-            [req.body.content, req.body.date, req.body.userName, uuid.v4()]
-        );
-        console.log(announcementsFromDB);
+        const announcement = await prisma.announcements.create({
+            data: {
+                uuid: uuid.v4(),
+                content: req.body.content,
+                username: req.body.username,
+                date: req.body.date
+            }
+
+        });
+        
         res.status(201).json({
             status: "success",
             data: {
-                announcement: announcementsFromDB.rows[0]
+                announcement: announcement
             }
         });
     } catch (err) {
@@ -55,17 +57,16 @@ app.post(api_route + "/announcements", async (req, res) => {
 //delete an announcement
 app.delete(api_route + "/announcements/:id", async (req, res) => {
     try {
-        const announcementsFromDB = await db.query(
-            "DELETE FROM announcements where id = $1 RETURNING *;",
-            req.params.id
-        );
-        console.log(announcementsFromDB);
-        res.status(204).json({
-            status: "success",
-            data: {
-                announcements: announcementsFromDB.rows
+        const announcement = await prisma.announcements.delete({
+            where: {
+                uuid: req.params.id
             }
         });
+        res.status(203).json({
+            status: "success",
+            uuid: announcement.uuid
+        });
+        
     } catch (err) {
         console.log(err);
     }

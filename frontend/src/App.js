@@ -13,7 +13,7 @@ const baseURL = process.env.NODE_ENV === 'production' ? "api/v1/announcements" :
 function App() {
   const [announcements, setAnnouncements] = useState([]);
   const [announcementText, setAnnouncementText] = useState("");
-  const [userName, setUserNametext] = useState("");
+  const [username, setUserNametext] = useState("");
   const [filterKey, setFilterKey] = useState("all");
   const [isCreateButtonDisabled, setCreateButtonDisable] = useState(true);
   
@@ -21,8 +21,8 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetch(baseURL);
-      let announcements = await result.json();
-      setAnnouncements(announcements);
+      let announcmens_json = await result.json();
+      setAnnouncements(announcmens_json.data.announcements)
     };
 
     fetchData();
@@ -30,18 +30,24 @@ function App() {
 
   //handlers
   const handleDeleteAnnouncement = async (uuid) => {
-    const result = await fetch(baseURL + "/" + uuid, {
-      method: "DELETE",
+    const result = await fetch(`${baseURL}/${uuid}`, {
+      method: "DELETE"
     });
-    let newAnnouncements = await result.json();
-    setAnnouncements(newAnnouncements);
+    let deleted_announcement = await result.json();
+
+    if (deleted_announcement.status == "success") {
+      var _announcements = announcements;
+      console.log(deleted_announcement)
+      setAnnouncements(_announcements.filter(({ uuid }) => uuid != deleted_announcement.uuid));
+    }
+    
   };
 
   const handleCreateAnnouncement = async () => {
     let data = {
       content: announcementText,
       date: new Date(),
-      userName: userName === "" ? "anonymous" : userName
+      username: username === "" ? "anonymous" : username
     };
 
     const result = await fetch(baseURL, {
@@ -51,9 +57,11 @@ function App() {
         "Content-Type": "application/json",
       },
     });
-    let newAnnouncements = await result.json();
-    if (result.status == "201"){
-      setAnnouncements(newAnnouncements)
+    let announcment_json = await result.json();
+    if (announcment_json.status == "success"){
+      var _announcements = announcements;
+      _announcements.push(announcment_json.data.announcement)
+      setAnnouncements(_announcements)
       setAnnouncementText("");
       setUserNametext("");
       setCreateButtonDisable(true)
@@ -82,7 +90,7 @@ function App() {
       <AnnouncementsInput
         announcementText={announcementText}
         setAnnouncementText={setAnnouncementText}
-        userName={userName}
+        username={username}
         setUserNametext={setUserNametext}
         handleCreateAnnouncement={handleCreateAnnouncement}
         isCreateButtonDisabled={isCreateButtonDisabled}

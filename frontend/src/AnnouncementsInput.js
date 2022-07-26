@@ -2,7 +2,7 @@ import React from "react";
 
 const AnnouncementsInput = ({
   announcementText,
-  userName,
+  username,
   setAnnouncementText,
   setUserNametext,
   handleCreateAnnouncement,
@@ -28,7 +28,7 @@ const AnnouncementsInput = ({
       />
       <input className="username"
         placeholder="Input your name"
-        value={userName}
+        value={username}
         onChange={(e) => setUserNametext(e.target.value)}
         style={{ width: "100px" }}
       />
