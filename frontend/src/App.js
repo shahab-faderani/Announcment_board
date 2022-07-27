@@ -4,11 +4,15 @@ import AnnouncementsFilter from "./AnnouncementsFilter";
 import AnnouncementsInput from "./AnnouncementsInput";
 import AnnouncementsList from "./AnnouncementsList";
 import React, { Component } from 'react'; 
+require("dotenv").config();
+
+const backendIP = process.env.BACKENDIP;
+const backend_port = process.env.BACKENDPORT;
 
 // NODE_ENV = 'development' 
 // NODE_ENV = 'production' 
 
-const baseURL = process.env.NODE_ENV === 'production' ? "api/v1/announcements" : "http://localhost:3001/api/v1/announcements";
+const baseURL = process.env.NODE_ENV === 'production' ?`http://${backendIP}:${backend_port}/api/v1/announcements` : "http://localhost:3001/api/v1/announcements";
 
 function App() {
   const [announcements, setAnnouncements] = useState([]);
