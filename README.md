@@ -1,5 +1,5 @@
 # Announcment_board
-an annpunment board to publish, delete and sort announcments. 
+an announcement board to publish, delete and sort announcments. 
 
 
 ## Getting started
