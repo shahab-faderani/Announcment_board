@@ -18,7 +18,7 @@ jobs:
         run: |
           echo $DOCKER_USER_NAME
           echo $DOCKER_PASSWORD
-          docker login -u $DOCKER_USER_NAME -p $DOCKER_PASSWORD
+          docker login -u "$DOCKER_USER_NAME" -p "$DOCKER_PASSWORD"
       - name: docker build backend
         run: |
           docker build -t shahabfaderani/announcement_board_backend:LIVE .
