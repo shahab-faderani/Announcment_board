@@ -1,0 +1,16 @@
+name: Docker to Ec2 Series Builds
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v3
+      - name: docker build backend
+        run: |
+          docker build -t shahabfaderani/announcement_board_backend:LIVE .
+
