@@ -20,5 +20,5 @@ jobs:
           docker login -u "$DOCKER_USER_NAME" -p "$DOCKER_PASSWORD"
       - name: docker build backend
         run: |
-          docker build -t shahabfaderani/announcement_board_backend:LIVE .
+          docker build --file ./backend/Dockerfile -t shahabfaderani/announcement_board_backend:LIVE .
 
