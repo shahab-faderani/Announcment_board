@@ -16,9 +16,11 @@ jobs:
           DOCKER_USER_NAME: ${{secrets.DOCKER_USER_NAME}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: |
-          cd backend
           docker login -u "$DOCKER_USER_NAME" -p "$DOCKER_PASSWORD"
       - name: docker build backend
         run: |
           docker build --file ./backend/Dockerfile -t shahabfaderani/announcement_board_backend:LIVE .
+      - name: docker push backend
+        run: |
+          docker push shahabfaderani/announcement_board:LIVE     
 
