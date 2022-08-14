@@ -10,14 +10,23 @@ jobs:
     steps:
 
       - uses: actions/checkout@v3
+      
+      - name: docker logout
+        run: |
+          docker logout
+      
       - name: docker build backend
         run: |
-          docker build --file ./backend/Dockerfile -t shahabfaderani/announcement_board:BACKEND .
-      - name: docker login and push backend
+          docker build --file ./backend/Dockerfile -t shahabfaderani/announcement_board_backend:0 .
+          
+      - name: docker login
         env: 
           DOCKER_USER_NAME: ${{secrets.DOCKER_USER_NAME}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: |
           docker login -u "$DOCKER_USER_NAME" -p "$DOCKER_PASSWORD" docker.io
-          docker push shahabfaderani/announcement_board:BACKEND
+          
+      - name: docker push
+        run: | 
+          docker push shahabfaderani/announcement_board_backend:0
 
