@@ -6,7 +6,7 @@ on:
 jobs:
   build:
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: login to Dockerhub registry
@@ -21,7 +21,6 @@ jobs:
         run: |
           docker tag announcement_board_backend shahabfaderani/announcement_board_backend:0 
           
-          
       - name: docker push
         env: 
           DOCKER_USER_NAME: shahabfaderani
@@ -29,7 +28,7 @@ jobs:
         run: | 
           docker push docker.io/shahabfaderani/announcement_board_backend:0
           
-      - name: run docker build
+      - name: run docker 
         run: | 
           docker run -p 80:80 shahabfaderani/announcement_board_backend:0 
           
