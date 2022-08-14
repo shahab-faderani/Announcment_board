@@ -11,8 +11,8 @@ jobs:
       -
         name: secrets test
         env: 
-            WHO_TO_TRUST: ${{ secrets.SECRET_TOKEN }}
-        if:  env.WHO_TO_TRUST == 'Shahab'
+            WHO_TO_TRUES: ${{ secrets.WHO_TO_TRUES }}
+        if:  env.WHO_TO_TRUES == 'Shahab'
         run: echo "I know what the secret token is!"
       - 
         name: Set Up QEMU
