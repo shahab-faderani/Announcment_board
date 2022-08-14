@@ -26,8 +26,10 @@ jobs:
           docker tag announcement_board_backend shahabfaderani/announcement_board_backend:0 
           
       - name: docker push
+        env: 
+          DOCKER_USER_NAME: "${{secrets.DOCKER_USER_NAME}}"
+          DOCKER_PASSWORD: "${{secrets.DOCKER_PASSWORD}}"
         run: | 
-          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{secrets.DOCKER_USER_NAME}} --password-stdin
-          echo ${{ secrets.DOCKER_PASSWORD }} | docker login docker.io -u ${{secrets.DOCKER_USER_NAME}} --password-stdin
+          docker login -u "$DOCKER_USER_NAME" -p "$DOCKER_PASSWORD"
           docker push docker.io/shahabfaderani/announcement_board_backend:0
 
