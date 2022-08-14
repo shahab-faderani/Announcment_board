@@ -8,12 +8,15 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-
       - uses: actions/checkout@v3
-      
-      - name: docker logout
-        run: | 
-          docker logout
+      - name: login to Dockerhub registry
+        run: echo "${{secrets.DOCKER_PASSWORD}}" | docker login.pkg.github.com -u "${{secrets.DOCKER_USER_NAME}}" --password-stdin  
+        
+      - name: login to Dockerhub
+        uses: docker/login-action@v1
+        with:
+          username: ${{secrets.DOCKER_USER_NAME}}
+          password: ${{secrets.DOCKER_PASSWORD}}
       
       - name: docker build backend
         run: |
@@ -23,16 +26,9 @@ jobs:
         run: |
           docker tag announcement_board_backend shahabfaderani/announcement_board_backend:0 
           
-      - name: docker login
-        env: 
-          DOCKER_USER_NAME: ${{secrets.DOCKER_USER_NAME}}
-          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-        run: |
-          docker login
-          "$DOCKER_USER_NAME"
-          "$DOCKER_PASSWORD" 
-          
       - name: docker push
         run: | 
-          docker push shahabfaderani/announcement_board_backend:0
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{secrets.DOCKER_USER_NAME}} --password-stdin
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login docker.io -u ${{secrets.DOCKER_USER_NAME}} --password-stdin
+          docker push docker.io/shahabfaderani/announcement_board_backend:0
 
