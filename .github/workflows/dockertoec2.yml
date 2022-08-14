@@ -16,7 +16,9 @@ jobs:
       
       - name: docker build backend
         run: |
-          docker build --file ./backend/Dockerfile -t announcement_board_backend .
+          cd backend |
+          ls |
+          docker build -t announcement_board_backend .
           
       - name: tagging the docker build
         run: |
