@@ -20,7 +20,7 @@ jobs:
 
         with:
           username: shahabfaderani
-          password: Alivasei123
+          password: ${{ secrets.DOCKER_PASSWORD }}
       -
         name: Build and push
         uses: docker/build-push-action@v3
