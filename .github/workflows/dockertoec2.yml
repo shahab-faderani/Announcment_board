@@ -14,8 +14,9 @@ jobs:
           docker login -u shahabfaderani -p "${{secrets.DOCKER_PASSWORD}}"
       
       - name: docker build backend
+        working-directory: ./backend
         run: |
-          docker build -f Dockerfile.backend -t announcement_board_backend .
+          docker build -t announcement_board_backend .
           
       - name: tagging the docker build
         run: |
