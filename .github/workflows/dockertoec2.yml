@@ -4,31 +4,28 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  docker:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v3
-      - name: login to Dockerhub registry
-        env: 
-          DOCKER_USER_NAME: "${{secrets.DOCKER_USER_NAME}}"
-          DOCKER_PASSWORD: "${{secrets.DOCKER_PASSWORD}}"
-        run: | 
-         
-          docker login -u "$DOCKER_USER_NAME" -p "$DOCKER_PASSWORD"
+      - 
+        name: Set Up QEMU
+        uses: docker/setup-qemu-action@v2
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USER_NAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: ./backend
+          push: true
+          tags: shahabfaderani/announcement_board_backend:latest
       
-      - name: docker build backend
-        run: |
-          docker build --file ./backend/Dockerfile -t announcement_board_backend .
-          
-      - name: tagging the docker build
-        run: |
-          docker tag announcement_board_backend shahabfaderani/announcement_board_backend:0 
-          
-      - name: docker push
-        env: 
-          DOCKER_USER_NAME: "${{secrets.DOCKER_USER_NAME}}"
-          DOCKER_PASSWORD: "${{secrets.DOCKER_PASSWORD}}"
-        run: | 
-          docker push docker.io/shahabfaderani/announcement_board_backend:0
-
+    
