@@ -11,8 +11,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: login to Dockerhub registry
         env: 
-          DOCKER_USER_NAME: ${{secrets.DOCKER_USER_NAME}}
-          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+          DOCKER_USER_NAME: "${{secrets.DOCKER_USER_NAME}}"
+          DOCKER_PASSWORD: "${{secrets.DOCKER_PASSWORD}}"
               
         run: | 
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER_NAME --password-stdin  
