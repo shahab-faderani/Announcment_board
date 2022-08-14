@@ -6,7 +6,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
       - name: login to Dockerhub registry
@@ -20,7 +20,7 @@ jobs:
       - name: tagging the docker build
         run: |
           docker tag announcement_board_backend shahabfaderani/announcement_board_backend:0 
-          docker run -p 80:80 shahabfaderani/announcement_board_backend:0 
+          
           
       - name: docker push
         env: 
@@ -28,6 +28,10 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: | 
           docker push docker.io/shahabfaderani/announcement_board_backend:0
+          
+      - name: run docker build
+        run: | 
+          docker run -p 80:80 shahabfaderani/announcement_board_backend:0 
           
 
     
