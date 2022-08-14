@@ -17,6 +17,8 @@ jobs:
         working-directory: ./backend
         run: |
           docker build -t announcement_board_backend .
+          env: 
+            PORT: 80
           
       - name: tagging the docker build
         run: |
