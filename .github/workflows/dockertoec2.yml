@@ -1,3 +1,4 @@
+
 name: Docker to Ec2 Series Builds
 on:
   push:
@@ -27,10 +28,3 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: | 
           docker push docker.io/shahabfaderani/announcement_board_backend:0
-          
-      - name: run docker 
-        run: | 
-          docker run -p 80:80 shahabfaderani/announcement_board_backend:0 
-          
-
-    
