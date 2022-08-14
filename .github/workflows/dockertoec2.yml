@@ -1,4 +1,3 @@
-
 name: Docker to Ec2 Series Builds
 on:
   push:
@@ -16,9 +15,7 @@ jobs:
       
       - name: docker build backend
         run: |
-          cd backend |
-          ls |
-          docker build -t announcement_board_backend .
+          docker build --file ./backend/Dockerfile -t announcement_board_backend .
           
       - name: tagging the docker build
         run: |
