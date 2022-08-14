@@ -30,6 +30,5 @@ jobs:
           DOCKER_USER_NAME: "${{secrets.DOCKER_USER_NAME}}"
           DOCKER_PASSWORD: "${{secrets.DOCKER_PASSWORD}}"
         run: | 
-          docker login -u "$DOCKER_USER_NAME" -p "$DOCKER_PASSWORD"
-          docker push docker.io/shahabfaderani/announcement_board_backend:0
+          docker push docker.io/shahabfaderani/announcement_board_backend
 
