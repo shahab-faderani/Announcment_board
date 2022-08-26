@@ -1,24 +1,6 @@
 # Announcment_board
-an announcement board to publish, delete and sort announcments. 
+An announcement board to publish, delete and sort announcments. The backend application is dockerized into an (AWS) EC2 instance, by a GitHub Action pipeline when merging into the main branch.  
 
-
-## Getting started
-Requirements:
-
-    -nodeJS v2 or greater
-    -npm v6 or greater 
-
-Build instructions, assuming that nodeJS and npm are installed:
-
-    -Backend: open a terminal in the backend folder and run the following commands:
-              
-        npm i     
-        npm run devStart  
-
-    -Frontend: open a terminal in the frontend folder and run the following commands:
-
-        npm i
-        npm start
 
 ## Add your files
 
